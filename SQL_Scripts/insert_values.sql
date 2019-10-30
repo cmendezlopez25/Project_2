@@ -18,7 +18,7 @@ insert into account(account_id, name) values(2, 'Savings Account');
 
 insert into transaction_table(transaction_id, account_id, amount, date, name, note) values(1, 1, -300.49, current_date, 'Starbucks', 'I like coffee');
 insert into transaction_table values(2, 1, -50.49, current_date, 'Chipotle', 'One burrito', 'WEEKLY');
-insert into transaction_table values(3, 2, 500.49, current_date, 'Stolen', 'The bank is broke now.', 'BIWEEKLY');
+insert into transaction_table values(3, 2, 500.49, current_date, 'Paycheck', 'I have money.', 'BIWEEKLY');
 
 insert into transaction_category values(1, 1);
 insert into transaction_category values(3, 1);
