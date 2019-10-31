@@ -49,7 +49,4 @@ src/main/resources/database.properties
 #.project
 .project
 
-#angular build
-**/angular-build/**
-
 #This is how you add to your gitignore file
