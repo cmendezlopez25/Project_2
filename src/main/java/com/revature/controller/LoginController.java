@@ -12,6 +12,6 @@ public class LoginController {
 	@PostMapping("/login")
 	public String loginPost(User user) {
 		System.out.println("I've made it.");
-		return "/login";
+		return "Testing";
 	}
 }
