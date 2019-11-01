@@ -378,7 +378,8 @@
             /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
             /* harmony import */ var _component_login_login_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./component/login/login.component */ "./src/app/component/login/login.component.ts");
             var routes = [
-                { path: "login", component: _component_login_login_component__WEBPACK_IMPORTED_MODULE_3__["LoginComponent"] }
+                { path: "login", component: _component_login_login_component__WEBPACK_IMPORTED_MODULE_3__["LoginComponent"] },
+                { path: '**', component: _component_login_login_component__WEBPACK_IMPORTED_MODULE_3__["LoginComponent"] }
             ];
             var AppRoutingModule = /** @class */ (function () {
                 function AppRoutingModule() {
