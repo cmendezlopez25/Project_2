@@ -27,12 +27,13 @@ import com.revature.service.AccountServiceImpl;
 public class AccountServiceImplTest {
 
 	private AccountServiceImpl accountService;
+	
 	private Account existingAccount;
 	private Account newAccount;
 	private Account badAccount;
 	
 	@Mock
-	private AccountDao accountDao;
+	private AccountDao accDao;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -45,20 +46,32 @@ public class AccountServiceImplTest {
 	@Before
 	public void setUp() throws Exception {
 		accountService = new AccountServiceImpl();
-		existingAccount = new Account();
-		existingAccount.setAccountId(1);
-		existingAccount.setAccountName("Mock Account");
-		existingAccount.setTransactions(null);
-		existingAccount.setUserRoleAccounts(null);
+		existingAccount = new Account(1, "existing Account", null, null);
+//		existingAccount.setAccountId(1);
+//		existingAccount.setAccountName("existing Account");
+//		existingAccount.setTransactions(null);
+//		existingAccount.setUserRoleAccounts(null);
+		
+		when(accDao.createAccount(existingAccount)).thenReturn(false);
+		when(accDao.readAccount(existingAccount)).thenReturn(existingAccount);
+		when(accDao.updateAccount(existingAccount)).thenReturn(true);
+		when(accDao.deleteAccount(existingAccount)).thenReturn(true);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
+	@Test(expected=NullPointerException.class)
+	public void createAccountNull() {
+		accountService.createAccount(null);
 	}
+	
+	@Test
+	public void createAccountExisting() {
+		assertFalse(accountService.createAccount(existingAccount));
+		Mockito.verify(accDao).createAccount(existingAccount);
+	}
+	
 
 }

@@ -31,7 +31,6 @@ public class AccountServiceImpl implements AccountService {
 
 	}
 
-
 	@Override
 	public Account readAccount(Account account) {
 		if (account == null) {
