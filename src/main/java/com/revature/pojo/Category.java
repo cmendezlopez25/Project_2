@@ -1,10 +1,16 @@
 package com.revature.pojo;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -24,6 +30,12 @@ public class Category {
 	@NotEmpty
 	@Size(max=100)
 	private String categoryName;
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="transaction_category",
+			joinColumns=@JoinColumn(name="category_id"),
+			inverseJoinColumns=@JoinColumn(name="transaction_id"))
+	private Set<Transaction> transactions;
 
 	public Category() {
 		super();

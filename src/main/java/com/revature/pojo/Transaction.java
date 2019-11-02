@@ -1,13 +1,17 @@
 package com.revature.pojo;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -51,6 +55,12 @@ public class Transaction {
 	
 	@Column(name="recurring")
 	private String recurring;
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name="transaction_category",
+			joinColumns=@JoinColumn(name="transaction_id"),
+			inverseJoinColumns=@JoinColumn(name="category_id"))
+	private Set<Category> categories;
 
 	public Transaction() {
 		super();
