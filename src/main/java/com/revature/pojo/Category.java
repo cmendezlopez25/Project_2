@@ -41,10 +41,11 @@ public class Category {
 		super();
 	}
 
-	public Category(int categoryId, @Size(max = 100) String categoryName) {
+	public Category(int categoryId, @Size(max = 100) String categoryName, Set<Transaction> transactions) {
 		super();
 		this.categoryId = categoryId;
 		this.categoryName = categoryName;
+		this.transactions = transactions;
 	}
 
 	public int getCategoryId() {
@@ -63,12 +64,21 @@ public class Category {
 		this.categoryName = categoryName;
 	}
 
+	public Set<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Set<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + categoryId;
 		result = prime * result + ((categoryName == null) ? 0 : categoryName.hashCode());
+		result = prime * result + ((transactions == null) ? 0 : transactions.hashCode());
 		return result;
 	}
 
@@ -88,12 +98,19 @@ public class Category {
 				return false;
 		} else if (!categoryName.equals(other.categoryName))
 			return false;
+		if (transactions == null) {
+			if (other.transactions != null)
+				return false;
+		} else if (!transactions.equals(other.transactions))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + "]";
+		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + ", transactions="
+				+ transactions + "]";
 	}
+
 	
 }

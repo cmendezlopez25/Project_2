@@ -1,10 +1,13 @@
 package com.revature.pojo;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -25,14 +28,18 @@ public class Role {
 	@Size(max=25)
 	private String roleName;
 
+	@OneToMany(mappedBy="role")
+	private Set<UserRoleAccount> userRoleAccounts;
+	
 	public Role() {
 		super();
 	}
 
-	public Role(int roleId, @Size(max = 25) String roleName) {
+	public Role(int roleId, @Size(max = 25) String roleName, Set<UserRoleAccount> userRoleAccounts) {
 		super();
 		this.roleId = roleId;
 		this.roleName = roleName;
+		this.userRoleAccounts = userRoleAccounts;
 	}
 
 	public int getRoleId() {
@@ -51,12 +58,21 @@ public class Role {
 		this.roleName = roleName;
 	}
 
+	public Set<UserRoleAccount> getUserRoleAccounts() {
+		return userRoleAccounts;
+	}
+
+	public void setUserRoleAccounts(Set<UserRoleAccount> userRoleAccounts) {
+		this.userRoleAccounts = userRoleAccounts;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + roleId;
 		result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
+		result = prime * result + ((userRoleAccounts == null) ? 0 : userRoleAccounts.hashCode());
 		return result;
 	}
 
@@ -76,12 +92,18 @@ public class Role {
 				return false;
 		} else if (!roleName.equals(other.roleName))
 			return false;
+		if (userRoleAccounts == null) {
+			if (other.userRoleAccounts != null)
+				return false;
+		} else if (!userRoleAccounts.equals(other.userRoleAccounts))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Role [roleId=" + roleId + ", roleName=" + roleName + "]";
+		return "Role [roleId=" + roleId + ", roleName=" + roleName + ", userRoleAccounts=" + userRoleAccounts + "]";
 	}
+
 
 }

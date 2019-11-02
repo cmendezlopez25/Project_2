@@ -33,14 +33,20 @@ public class Account {
 	@OneToMany(mappedBy="accountId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	Set<Transaction> transactions;
 	
+	@OneToMany(mappedBy="account")
+	private Set<UserRoleAccount> userRoleAccounts;
+	
 	public Account() {
 		super();
 	}
 
-	public Account(int accountId, @Size(max = 100) String accountName) {
+	public Account(int accountId, @Size(max = 100) String accountName, Set<Transaction> transactions,
+			Set<UserRoleAccount> userRoleAccounts) {
 		super();
 		this.accountId = accountId;
 		this.accountName = accountName;
+		this.transactions = transactions;
+		this.userRoleAccounts = userRoleAccounts;
 	}
 
 	public int getAccountId() {
@@ -59,12 +65,30 @@ public class Account {
 		this.accountName = accountName;
 	}
 
+	public Set<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Set<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+
+	public Set<UserRoleAccount> getUserRoleAccounts() {
+		return userRoleAccounts;
+	}
+
+	public void setUserRoleAccounts(Set<UserRoleAccount> userRoleAccounts) {
+		this.userRoleAccounts = userRoleAccounts;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + accountId;
 		result = prime * result + ((accountName == null) ? 0 : accountName.hashCode());
+		result = prime * result + ((transactions == null) ? 0 : transactions.hashCode());
+		result = prime * result + ((userRoleAccounts == null) ? 0 : userRoleAccounts.hashCode());
 		return result;
 	}
 
@@ -84,12 +108,23 @@ public class Account {
 				return false;
 		} else if (!accountName.equals(other.accountName))
 			return false;
+		if (transactions == null) {
+			if (other.transactions != null)
+				return false;
+		} else if (!transactions.equals(other.transactions))
+			return false;
+		if (userRoleAccounts == null) {
+			if (other.userRoleAccounts != null)
+				return false;
+		} else if (!userRoleAccounts.equals(other.userRoleAccounts))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Account [accountId=" + accountId + ", accountName=" + accountName + "]";
+		return "Account [accountId=" + accountId + ", accountName=" + accountName + ", transactions=" + transactions
+				+ ", userRoleAccounts=" + userRoleAccounts + "]";
 	}
 	
 }

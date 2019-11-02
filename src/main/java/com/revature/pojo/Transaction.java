@@ -68,7 +68,7 @@ public class Transaction {
 
 	public Transaction(int transactionId, int accountId,
 			@DecimalMin("0.00") @Digits(integer = 10, fraction = 2) double amount, LocalDate date,
-			@Size(max = 100) String transactionName, String note, String recurring) {
+			@Size(max = 100) String transactionName, String note, String recurring, Set<Category> categories) {
 		super();
 		this.transactionId = transactionId;
 		this.accountId = accountId;
@@ -77,6 +77,7 @@ public class Transaction {
 		this.transactionName = transactionName;
 		this.note = note;
 		this.recurring = recurring;
+		this.categories = categories;
 	}
 
 	public int getTransactionId() {
@@ -135,6 +136,14 @@ public class Transaction {
 		this.recurring = recurring;
 	}
 
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -143,6 +152,7 @@ public class Transaction {
 		long temp;
 		temp = Double.doubleToLongBits(amount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((categories == null) ? 0 : categories.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((note == null) ? 0 : note.hashCode());
 		result = prime * result + ((recurring == null) ? 0 : recurring.hashCode());
@@ -163,6 +173,11 @@ public class Transaction {
 		if (accountId != other.accountId)
 			return false;
 		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
+			return false;
+		if (categories == null) {
+			if (other.categories != null)
+				return false;
+		} else if (!categories.equals(other.categories))
 			return false;
 		if (date == null) {
 			if (other.date != null)
@@ -193,7 +208,7 @@ public class Transaction {
 	public String toString() {
 		return "Transaction [transactionId=" + transactionId + ", accountId=" + accountId + ", amount=" + amount
 				+ ", date=" + date + ", transactionName=" + transactionName + ", note=" + note + ", recurring="
-				+ recurring + "]";
+				+ recurring + ", categories=" + categories + "]";
 	}
 	
 }
