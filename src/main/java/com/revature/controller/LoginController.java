@@ -13,12 +13,6 @@ import com.revature.pojo.User;
 public class LoginController {
 	//private UserService userService;
 	@GetMapping("/login")
-	public String loginGet() {
-		System.out.println("ah");
-		return "ah";
-	}
-	
-	@GetMapping("/login")
 	public String loginGet(User user) {
 		System.out.println("Wee");
 		return "Testing";
