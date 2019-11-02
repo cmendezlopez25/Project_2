@@ -12,5 +12,4 @@
 	
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<mvc:resources location="/angular-build/" mapping="/angular-build/**"></mvc:resources>
-
 </beans>
