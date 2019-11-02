@@ -3,6 +3,7 @@ package com.revature.dao;
 import java.util.List;
 
 import com.revature.pojo.Account;
+import com.revature.pojo.User;
 
 public interface AccountDao {
 	public boolean createAccount(Account account);
@@ -13,6 +14,6 @@ public interface AccountDao {
 	
 	public boolean deleteAccount(Account account);
 	
-	public List<Account> readAllAccounts();
+	public List<Account> readAllAccountsByUser(User user);
 	
 }

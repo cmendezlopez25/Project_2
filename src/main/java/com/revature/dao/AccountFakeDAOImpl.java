@@ -3,6 +3,7 @@ package com.revature.dao;
 import java.util.List;
 
 import com.revature.pojo.Account;
+import com.revature.pojo.User;
 
 public class AccountFakeDAOImpl implements AccountDao {
 	
@@ -33,7 +34,7 @@ public class AccountFakeDAOImpl implements AccountDao {
 	}
 
 	@Override
-	public List<Account> readAllAccounts() {
+	public List<Account> readAllAccountsByUser(User user) {
 		// TODO Auto-generated method stub
 		return null;
 	}
