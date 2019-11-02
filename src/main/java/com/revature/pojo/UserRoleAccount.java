@@ -6,7 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name="user_role_account")
 public class UserRoleAccount {
 	@ManyToOne
 	@JoinColumn(name="email")
