@@ -10,14 +10,19 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.revature.dao.UserDaoImpl;
 import com.revature.pojo.User;
 import com.revature.util.SessionFactoryUtil;
 
+@ContextConfiguration(classes=SessionFactoryUtil.class)
+@RunWith(MockitoJUnitRunner.class)
 public class UserDaoImplTest {
 	private UserDaoImpl userDao;
 	private User existingUser;
@@ -37,7 +42,7 @@ public class UserDaoImplTest {
 		userDao = new UserDaoImpl();
 		
 		existingUser = new User();
-		existingUser.setEmail("rickywang@email.com");
+		existingUser.setEmail("rickywang@gmail.com");
 		existingUser.setPassword("password");
 		existingUser.setFirstName("Ricky");
 		existingUser.setLastName("Wang");
