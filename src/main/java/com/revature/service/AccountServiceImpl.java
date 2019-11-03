@@ -20,12 +20,12 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
-	public boolean createAccount(Account account) {
+	public Account createAccount(Account account) {
 		if (account == null) {
 			throw new NullPointerException();
 		}
 		if (!isValidAccount(account)) {
-			return false;
+			return null;
 		}
 		return accountDao.createAccount(account);
 

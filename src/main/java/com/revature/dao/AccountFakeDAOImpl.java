@@ -10,9 +10,9 @@ public class AccountFakeDAOImpl implements AccountDao {
 	
 	
 	@Override
-	public boolean createAccount(Account account) {
+	public Account createAccount(Account account) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import com.revature.pojo.Account;
 import com.revature.pojo.User;
 
 public interface AccountDao {
-	public boolean createAccount(Account account);
+	public Account createAccount(Account account);
 	
 	public Account readAccount(Account account);
 	
