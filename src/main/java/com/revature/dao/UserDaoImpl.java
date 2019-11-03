@@ -12,17 +12,13 @@ import org.springframework.stereotype.Component;
 import com.revature.pojo.Account;
 import com.revature.pojo.Role;
 import com.revature.pojo.User;
+import com.revature.util.SessionFactoryUtil;
 
 @Component
 public class UserDaoImpl implements UserDao {
-	private static SessionFactory sf;
+	private static SessionFactory sf = SessionFactoryUtil.getSessionFactory();
 	private Session sess;
 	private Transaction tx;
-	
-	@Autowired
-	public void setSessionFactory(SessionFactory sf) {
-		this.sf = sf;
-	}
 	
 	public Session getCurrentSession() {
 		return sess;
@@ -58,8 +54,20 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public User readUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		if (user == null) {
+			throw new NullPointerException();
+		}
+		
+		if (!isValidUser(user)) {
+			return null;
+		}
+		
+		beginSession();
+		
+		User newUser = sess.get(User.class, user.getEmail());
+		
+		endSession();
+		return newUser;
 	}
 
 	@Override
