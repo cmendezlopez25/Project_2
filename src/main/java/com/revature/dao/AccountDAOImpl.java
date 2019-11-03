@@ -2,10 +2,13 @@ package com.revature.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.revature.pojo.Account;
 import com.revature.pojo.User;
 
-public class AccountFakeDAOImpl implements AccountDao {
+@Component
+public class AccountDAOImpl implements AccountDao {
 	
 	
 	
