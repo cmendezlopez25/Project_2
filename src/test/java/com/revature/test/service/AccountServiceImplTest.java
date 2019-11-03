@@ -62,7 +62,7 @@ public class AccountServiceImplTest {
 		accountService = new AccountServiceImpl();
 		
 		emptyUser = new User();
-		existingUser = new User("rickywang@email.com","password", "Ricky", "Wang", null);
+		existingUser = new User("rickywang@email.com","password", "Ricky", "Wang");
 		
 		existingAccount = new Account(1, "existing Account", null, null);
 		newAccount = new Account(2, "new account", null, null);
