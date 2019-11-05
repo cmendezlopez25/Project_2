@@ -39,6 +39,15 @@ public class Account {
 	public Account() {
 		super();
 	}
+	
+	public Account(String accName) {
+		this.accountName = accName;
+	}
+	
+	public Account(String accName, Set<UserRoleAccount> userRoleAcc) {
+		this.accountName = accName;
+		this.userRoleAccounts = userRoleAcc;
+	}
 
 	public Account(int accountId, @Size(max = 100) String accountName, Set<Transaction> transactions,
 			Set<UserRoleAccount> userRoleAccounts) {
