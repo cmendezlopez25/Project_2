@@ -16,9 +16,14 @@ import com.revature.util.SessionFactoryUtil;
 
 @Component
 public class UserDaoImpl implements UserDao {
-	private static SessionFactory sf = SessionFactoryUtil.getSessionFactory();
+	private static SessionFactory sf;
 	private Session sess;
 	private Transaction tx;
+	
+	@Autowired
+	public void setSessionFactory(SessionFactory sf) {
+		this.sf = sf;
+	}
 	
 	public Session getCurrentSession() {
 		return sess;
