@@ -16,6 +16,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="account")
 public class Account {
@@ -30,10 +32,12 @@ public class Account {
 	@Size(max=100)
 	private String accountName;
 	
-	@OneToMany(mappedBy="accountId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-	Set<Transaction> transactions;
+	@OneToMany(mappedBy="account", fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("account")
+	private Set<Transaction> transactions;
 	
-	@OneToMany(mappedBy="account")
+	@OneToMany(mappedBy="account", fetch=FetchType.EAGER)
+	@JsonIgnoreProperties("user")
 	private Set<UserRoleAccount> userRoleAccounts;
 	
 	public Account() {
@@ -87,8 +91,6 @@ public class Account {
 		int result = 1;
 		result = prime * result + accountId;
 		result = prime * result + ((accountName == null) ? 0 : accountName.hashCode());
-		result = prime * result + ((transactions == null) ? 0 : transactions.hashCode());
-		result = prime * result + ((userRoleAccounts == null) ? 0 : userRoleAccounts.hashCode());
 		return result;
 	}
 
@@ -108,23 +110,14 @@ public class Account {
 				return false;
 		} else if (!accountName.equals(other.accountName))
 			return false;
-		if (transactions == null) {
-			if (other.transactions != null)
-				return false;
-		} else if (!transactions.equals(other.transactions))
-			return false;
-		if (userRoleAccounts == null) {
-			if (other.userRoleAccounts != null)
-				return false;
-		} else if (!userRoleAccounts.equals(other.userRoleAccounts))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Account [accountId=" + accountId + ", accountName=" + accountName + ", transactions=" + transactions
-				+ ", userRoleAccounts=" + userRoleAccounts + "]";
+		return "Account [accountId=" + accountId + ", accountName=" + accountName + ", transactions=" + transactions + "]";
 	}
+
+	
 	
 }

@@ -1,34 +1,62 @@
 package com.revature.pojo;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="user_role_account")
 public class UserRoleAccount {
-	@ManyToOne
+	@Id
+	@SequenceGenerator(name="ura_id_seq", sequenceName="ura_id_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "ura_id_seq")
+	@Column(name="ura_id")
+	private int uraId;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="email")
+	@JsonIgnoreProperties("userRoleAccounts")
 	private User user;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="role_id")
+	@JsonIgnoreProperties("userRoleAccounts")
 	private Role role;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="account_id")
+	@JsonIgnoreProperties("userRoleAccounts")
 	private Account account;
 	
 	public UserRoleAccount() {
 		super();
 	}
 
-	public UserRoleAccount(User user, Role role, Account account) {
+	public UserRoleAccount(int uraId, User user, Role role, Account account) {
 		super();
+		this.uraId = uraId;
 		this.user = user;
 		this.role = role;
 		this.account = account;
+	}
+
+
+
+	public int getUraId() {
+		return uraId;
+	}
+
+	public void setUraId(int uraId) {
+		this.uraId = uraId;
 	}
 
 	public User getUser() {
@@ -61,6 +89,7 @@ public class UserRoleAccount {
 		int result = 1;
 		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + uraId;
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -84,6 +113,8 @@ public class UserRoleAccount {
 				return false;
 		} else if (!role.equals(other.role))
 			return false;
+		if (uraId != other.uraId)
+			return false;
 		if (user == null) {
 			if (other.user != null)
 				return false;
@@ -94,7 +125,7 @@ public class UserRoleAccount {
 
 	@Override
 	public String toString() {
-		return "UserRoleAccount [user=" + user + ", role=" + role + ", account=" + account + "]";
+		return "UserRoleAccount [uraId=" + uraId + ", user=" + user + ", role=" + role + ", account=" + account + "]";
 	}
-	
+
 }

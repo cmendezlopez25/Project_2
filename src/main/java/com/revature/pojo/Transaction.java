@@ -21,6 +21,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="transaction_table")
 public class Transaction {
@@ -30,9 +32,10 @@ public class Transaction {
 	@Column(name="transaction_id")
 	private int transactionId;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="account_id")
-	private int accountId;
+	@JsonIgnoreProperties("transactions")
+	private Account account;
 	
 	@Column(name="amount")
 	@NotEmpty
@@ -56,22 +59,23 @@ public class Transaction {
 	@Column(name="recurring")
 	private String recurring;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="transaction_category",
 			joinColumns=@JoinColumn(name="transaction_id"),
 			inverseJoinColumns=@JoinColumn(name="category_id"))
+	@JsonIgnoreProperties("transactions")
 	private Set<Category> categories;
 
 	public Transaction() {
 		super();
 	}
 
-	public Transaction(int transactionId, int accountId,
+	public Transaction(int transactionId, Account account,
 			@DecimalMin("0.00") @Digits(integer = 10, fraction = 2) double amount, LocalDate date,
 			@Size(max = 100) String transactionName, String note, String recurring, Set<Category> categories) {
 		super();
 		this.transactionId = transactionId;
-		this.accountId = accountId;
+		this.account = account;
 		this.amount = amount;
 		this.date = date;
 		this.transactionName = transactionName;
@@ -88,12 +92,12 @@ public class Transaction {
 		this.transactionId = transactionId;
 	}
 
-	public int getAccountId() {
-		return accountId;
+	public Account getAccount() {
+		return account;
 	}
 
-	public void setAccountId(int accountId) {
-		this.accountId = accountId;
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	public double getAmount() {
@@ -148,11 +152,10 @@ public class Transaction {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + accountId;
+		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(amount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + ((categories == null) ? 0 : categories.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((note == null) ? 0 : note.hashCode());
 		result = prime * result + ((recurring == null) ? 0 : recurring.hashCode());
@@ -170,14 +173,12 @@ public class Transaction {
 		if (getClass() != obj.getClass())
 			return false;
 		Transaction other = (Transaction) obj;
-		if (accountId != other.accountId)
+		if (account == null) {
+			if (other.account != null)
+				return false;
+		} else if (!account.equals(other.account))
 			return false;
 		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
-			return false;
-		if (categories == null) {
-			if (other.categories != null)
-				return false;
-		} else if (!categories.equals(other.categories))
 			return false;
 		if (date == null) {
 			if (other.date != null)
@@ -206,9 +207,12 @@ public class Transaction {
 
 	@Override
 	public String toString() {
-		return "Transaction [transactionId=" + transactionId + ", accountId=" + accountId + ", amount=" + amount
-				+ ", date=" + date + ", transactionName=" + transactionName + ", note=" + note + ", recurring="
-				+ recurring + ", categories=" + categories + "]";
+		return "Transaction [transactionId=" + transactionId + ", account=" + account + ", amount=" + amount + ", date="
+				+ date + ", transactionName=" + transactionName + ", note=" + note + ", recurring=" + recurring + "]";
 	}
+
+	
+
+	
 	
 }

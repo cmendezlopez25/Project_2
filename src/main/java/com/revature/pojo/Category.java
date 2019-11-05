@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="category")
 public class Category {
@@ -31,10 +33,11 @@ public class Category {
 	@Size(max=100)
 	private String categoryName;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="transaction_category",
 			joinColumns=@JoinColumn(name="category_id"),
 			inverseJoinColumns=@JoinColumn(name="transaction_id"))
+	@JsonIgnoreProperties("category")
 	private Set<Transaction> transactions;
 
 	public Category() {
@@ -78,7 +81,6 @@ public class Category {
 		int result = 1;
 		result = prime * result + categoryId;
 		result = prime * result + ((categoryName == null) ? 0 : categoryName.hashCode());
-		result = prime * result + ((transactions == null) ? 0 : transactions.hashCode());
 		return result;
 	}
 
@@ -98,19 +100,15 @@ public class Category {
 				return false;
 		} else if (!categoryName.equals(other.categoryName))
 			return false;
-		if (transactions == null) {
-			if (other.transactions != null)
-				return false;
-		} else if (!transactions.equals(other.transactions))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + ", transactions="
-				+ transactions + "]";
+		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + ", transactions="  + "]";
 	}
+
+	
 
 	
 }
