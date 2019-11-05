@@ -40,9 +40,9 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public Account createAccount(Account account) {
 		beginSession();
-		sess.save(account);
+		Account newAccount = (Account) sess.save(account);
 		endSession();
-		return account;
+		return newAccount;
 	}
 
 	@Override
@@ -60,9 +60,13 @@ public class AccountDaoImpl implements AccountDao {
 	}
 
 	@Override
-	public boolean updateAccount(Account account) {
-		// TODO Auto-generated method stub
-		return false;
+	public void updateAccount(Account account) {
+		if (account == null) {
+			throw new NullPointerException();
+		}
+		beginSession();
+		sess.update(account);
+		endSession();
 	}
 
 	@Override

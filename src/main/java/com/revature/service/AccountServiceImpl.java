@@ -46,7 +46,9 @@ public class AccountServiceImpl implements AccountService {
 		if (!isValidAccount(account)) {
 			return false;
 		}
-		return accountDao.updateAccount(account);
+		accountDao.updateAccount(account);
+		
+		return true;
 	}
 
 	@Override

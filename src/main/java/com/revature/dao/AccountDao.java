@@ -10,7 +10,7 @@ public interface AccountDao {
 	
 	public Account readAccount(Account account);
 	
-	public boolean updateAccount(Account account);
+	public void updateAccount(Account account);
 	
 	public boolean deleteAccount(Account account);
 	
