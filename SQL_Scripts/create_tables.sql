@@ -40,7 +40,8 @@ create table transaction_category(
 );
 
 create table user_role_account(
-    email varchar(100),
+    ura_id serial primary key,
+	email varchar(100),
     role_id int4,
     account_id int4,
     constraint ura_email_fk foreign key(email) references user_table(email) on delete cascade,
@@ -54,3 +55,4 @@ create sequence account_id_seq;
 create sequence transaction_id_seq;
 create sequence category_id_seq;
 create sequence role_id_seq;
+create sequence ura_id_seq;

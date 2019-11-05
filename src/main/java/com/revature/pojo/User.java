@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -11,6 +12,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="user_table")
@@ -37,22 +40,23 @@ public class User {
 	@Size(max=100)
 	private String lastName;
 	
-	//@OneToMany(mappedBy="user")
-	//private Set<UserRoleAccount> userRoleAccounts;
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
+	@JsonIgnoreProperties("user")
+	private Set<UserRoleAccount> userRoleAccounts;
 	
 	public User() {
 		super();
 	}
 
 	public User(@Pattern(regexp = "^(.+)@(.+)$") @Size(max = 100) String email, @Size(max = 100) String password,
-			@Size(max = 100) String firstName, @Size(max = 100) String lastName) {
-			//Set<UserRoleAccount> userRoleAccounts) {
+			@Size(max = 100) String firstName, @Size(max = 100) String lastName,
+			Set<UserRoleAccount> userRoleAccounts) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		//this.userRoleAccounts = userRoleAccounts;
+		this.userRoleAccounts = userRoleAccounts;
 	}
 
 	public String getEmail() {
@@ -87,13 +91,13 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	//public Set<UserRoleAccount> getUserRoleAccounts() {
-	//	return userRoleAccounts;
-	//}
+	public Set<UserRoleAccount> getUserRoleAccounts() {
+		return userRoleAccounts;
+	}
 
-	//public void setUserRoleAccounts(Set<UserRoleAccount> userRoleAccounts) {
-	//	this.userRoleAccounts = userRoleAccounts;
-	//}
+	public void setUserRoleAccounts(Set<UserRoleAccount> userRoleAccounts) {
+		this.userRoleAccounts = userRoleAccounts;
+	}
 
 	@Override
 	public int hashCode() {
@@ -103,7 +107,6 @@ public class User {
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		//result = prime * result + ((userRoleAccounts == null) ? 0 : userRoleAccounts.hashCode());
 		return result;
 	}
 
@@ -136,19 +139,15 @@ public class User {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		//if (userRoleAccounts == null) {
-			//if (other.userRoleAccounts != null)
-				//return false;
-		//} else if (!userRoleAccounts.equals(other.userRoleAccounts))
-			//return false;
 		return true;
 	}
 
-	//@Override
+	@Override
 	public String toString() {
 		return "User [email=" + email + ", password=" + password + ", firstName=" + firstName + ", lastName=" + lastName + "]";
-				//+ ", userRoleAccounts=" + userRoleAccounts + "]";
 	}
+
+	
 
 	
 }

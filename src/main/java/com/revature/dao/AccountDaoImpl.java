@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import com.revature.pojo.Account;
 import com.revature.pojo.User;
-import com.revature.util.SessionFactoryUtil;
 
 @Component
 public class AccountDaoImpl implements AccountDao {
@@ -48,8 +47,16 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public Account readAccount(Account account) {
-		// TODO Auto-generated method stub
-		return null;
+		if (account == null) {
+			throw new NullPointerException();
+		}
+		
+		beginSession();
+		
+		Account retAccount = sess.get(Account.class, account.getAccountId());
+		
+		endSession();
+		return retAccount;
 	}
 
 	@Override

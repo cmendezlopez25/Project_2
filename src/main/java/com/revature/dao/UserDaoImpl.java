@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.revature.pojo.Account;
 import com.revature.pojo.Role;
 import com.revature.pojo.User;
-import com.revature.util.SessionFactoryUtil;
 
 @Component
 public class UserDaoImpl implements UserDao {

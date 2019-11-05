@@ -23,16 +23,18 @@ public class AccountController {
 		this.accountService = accountService;
 	}
 	
-	@GetMapping
-	public String getAccount() {
-		System.out.println("get account");
-		return "success";
-	}
-	
 	@PostMapping
 	public Account createAccount(@RequestBody Account account) {
 		Account newAccount = accountService.createAccount(account);
 		System.out.println(account.getAccountName());
 		return newAccount;
+	}
+	
+	@GetMapping
+	public Account getAccount(@RequestBody Account account) {
+		Account retAccount = accountService.readAccount(account);
+		System.out.println(account.getAccountName());
+		System.out.println(retAccount.getAccountName());
+		return retAccount;
 	}
 }

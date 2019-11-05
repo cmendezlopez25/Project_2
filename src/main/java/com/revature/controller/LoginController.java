@@ -2,7 +2,6 @@ package com.revature.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,16 +19,10 @@ public class LoginController {
 		this.userService = userService;
 	}
 	
-	@GetMapping("/login")
-	public String loginGet(User user) {
-		System.out.println("Wee");
-		return "Testing";
-	}
-	
-	@PostMapping(consumes="application/json", value="/login")
+	@PostMapping(value="/login", consumes = "application/json", produces = "application/json")
 	public User loginPost(@RequestBody User user) {
 		User loginUser = userService.loginUser(user);
-		//System.out.println("NOPLEASE");
+		System.out.println("NOPLEASE");
 		return loginUser;
 	}
 }
