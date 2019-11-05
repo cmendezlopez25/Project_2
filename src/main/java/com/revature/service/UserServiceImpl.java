@@ -46,7 +46,11 @@ public class UserServiceImpl implements UserService {
 			return null;
 		}
 		
-		return userDao.readUser(user);
+		User newUser = userDao.readUser(user);
+		if (newUser != null && !newUser.getPassword().equals(user.getPassword())) {
+			newUser = null;
+		}
+		return newUser;
 	}
 
 	@Override
