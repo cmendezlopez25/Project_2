@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="role_table")
@@ -28,7 +31,8 @@ public class Role {
 	@Size(max=25)
 	private String roleName;
 
-	@OneToMany(mappedBy="role")
+	@OneToMany(mappedBy="role", fetch=FetchType.EAGER)
+	@JsonIgnoreProperties("role")
 	private Set<UserRoleAccount> userRoleAccounts;
 	
 	public Role() {
@@ -72,7 +76,6 @@ public class Role {
 		int result = 1;
 		result = prime * result + roleId;
 		result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
-		result = prime * result + ((userRoleAccounts == null) ? 0 : userRoleAccounts.hashCode());
 		return result;
 	}
 
@@ -92,18 +95,15 @@ public class Role {
 				return false;
 		} else if (!roleName.equals(other.roleName))
 			return false;
-		if (userRoleAccounts == null) {
-			if (other.userRoleAccounts != null)
-				return false;
-		} else if (!userRoleAccounts.equals(other.userRoleAccounts))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Role [roleId=" + roleId + ", roleName=" + roleName + ", userRoleAccounts=" + userRoleAccounts + "]";
+		return "Role [roleId=" + roleId + ", roleName=" + roleName + "]";
 	}
+
+	
 
 
 }

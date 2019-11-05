@@ -1,15 +1,18 @@
 package com.revature.util;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import com.revature.pojo.Account;
+import com.revature.pojo.Category;
+import com.revature.pojo.Role;
+import com.revature.pojo.Transaction;
 import com.revature.pojo.User;
-
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import com.revature.pojo.UserRoleAccount;
 
 @Component
 public class SessionFactoryUtil {
@@ -49,10 +52,11 @@ public class SessionFactoryUtil {
 		
 		//Programmatic way of adding these classes into hibernate
 		config.addAnnotatedClass(User.class);
-		//config.addAnnotatedClass(Account.class);
-		//config.addAnnotatedClass(Transaction.class);
-		//config.addAnnotatedClass(Category.class);
-		//config.addAnnotatedClass(Role.class);
+		config.addAnnotatedClass(Account.class);
+		config.addAnnotatedClass(UserRoleAccount.class);
+		config.addAnnotatedClass(Transaction.class);
+		config.addAnnotatedClass(Category.class);
+		config.addAnnotatedClass(Role.class);
 	}
 	
 	@Autowired

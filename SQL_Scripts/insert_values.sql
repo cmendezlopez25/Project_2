@@ -24,8 +24,8 @@ insert into transaction_category values(1, 1);
 insert into transaction_category values(3, 1);
 insert into transaction_category values(1, 2);
 
-insert into user_role_account values('ricky@email.com', 1, 1);
-insert into user_role_account values('jane@email.org', 2, 1);
-insert into user_role_account values('jane@email.org', 1, 2);
-insert into user_role_account values('jacob@email.email', 2, 2);
-insert into user_role_account values('carlos@mymail.com',3, 2);
+insert into user_role_account(email, role_id, account_id) values('ricky@email.com', 1, 1);
+insert into user_role_account(email, role_id, account_id) values('jane@email.org', 2, 1);
+insert into user_role_account(email, role_id, account_id) values('jane@email.org', 1, 2);
+insert into user_role_account(email, role_id, account_id) values('jacob@email.email', 2, 2);
+insert into user_role_account(email, role_id, account_id) values('carlos@mymail.com',3, 2);
