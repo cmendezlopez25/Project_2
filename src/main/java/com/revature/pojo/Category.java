@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="category")
 public class Category {
 	@Id
-	@SequenceGenerator(name="category_id_seq", sequenceName="category_id_seq")
+	@SequenceGenerator(name="category_id_seq", sequenceName="category_id_seq", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "category_id_seq")
 	@Column(name="category_id")
 	private int categoryId;
