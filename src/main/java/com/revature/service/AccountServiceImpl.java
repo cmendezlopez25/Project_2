@@ -28,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public Account createAccount(User user, Account account) {
-		if (account == null) {
+		if (account == null || user == null) {
 			throw new NullPointerException();
 		}
 		if (!isValidAccount(account)) {

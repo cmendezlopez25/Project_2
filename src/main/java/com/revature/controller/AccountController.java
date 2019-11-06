@@ -39,16 +39,19 @@ public class AccountController {
 	
 	@GetMapping("/{accountId}")
 	public Account getAccount(@PathVariable int accountId) {
+		// Should only people who are in account be able to read account?
 		return accountService.readAccount(accountId);
 	}
 	
 	@PutMapping
 	public Account updateAccount(@RequestBody Account account) {
+		// Will have to do role logic in service....
 		return accountService.updateAccount(account);
 	}
 	
 	@DeleteMapping
 	public String deleteAccount(@RequestBody Account account) {
+		// Only owner will be able to delete account
 		accountService.deleteAccount(account);
 		// Might need to redo return type for deletemapping
 		return "Deleted account";
@@ -56,6 +59,7 @@ public class AccountController {
 	
 	@GetMapping
 	public List<Account> getAllAccountsByUser(@RequestBody User user) {
+		// should user only be able to see only their logged in accounts?
 		return accountService.readAllAccountsByUser(user);
 	}
 }
