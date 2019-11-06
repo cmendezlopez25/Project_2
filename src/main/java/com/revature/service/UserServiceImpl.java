@@ -70,6 +70,19 @@ public class UserServiceImpl implements UserService {
 		}
 		return newUser;
 	}
+	
+	@Override
+	public User readUser(User user) {
+		if (user == null) {
+			throw new NullPointerException();
+		}
+		
+		if (!isValidUser(user)) {
+			return null;
+		}
+		
+		return userDao.readUser(user);
+	}
 
 	@Override
 	public boolean updateUser(User user) {
@@ -127,4 +140,5 @@ public class UserServiceImpl implements UserService {
 		
 		return true;
 	}
+
 }

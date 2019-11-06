@@ -6,7 +6,7 @@ import com.revature.pojo.Account;
 import com.revature.pojo.User;
 
 public interface AccountService {
-	public Account createAccount(Account account);
+	public Account createAccount(User user, Account account);
 	
 	public Account readAccount(int accountId);
 	

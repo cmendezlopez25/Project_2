@@ -40,6 +40,13 @@ public class UserRoleAccount {
 	public UserRoleAccount() {
 		super();
 	}
+	
+	public UserRoleAccount(User user, Role role, Account account) {
+		super();
+		this.user = user;
+		this.role = role;
+		this.account = account;
+	}
 
 	public UserRoleAccount(int uraId, User user, Role role, Account account) {
 		super();
@@ -48,8 +55,6 @@ public class UserRoleAccount {
 		this.role = role;
 		this.account = account;
 	}
-
-
 
 	public int getUraId() {
 		return uraId;
