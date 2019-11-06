@@ -22,7 +22,6 @@ public class LoginController {
 	@PostMapping(value="/login", consumes = "application/json", produces = "application/json")
 	public User loginPost(@RequestBody User user) {
 		User loginUser = userService.loginUser(user);
-		System.out.println("NOPLEASE");
 		return loginUser;
 	}
 }
