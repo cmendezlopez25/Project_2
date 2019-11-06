@@ -31,32 +31,28 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public Account readAccount(Account account) {
-		if (account == null) {
-			throw new NullPointerException();
-		}
-		return accountDao.readAccount(account);
+	public Account readAccount(int accountId) {
+		
+		return accountDao.readAccount(accountId);
 	}
 
 	@Override
-	public boolean updateAccount(Account account) {
+	public Account updateAccount(Account account) {
 		if (account == null) {
 			throw new NullPointerException();
 		}
 		if (!isValidAccount(account)) {
-			return false;
+			return null;
 		}
-		accountDao.updateAccount(account);
-		
-		return true;
+		return accountDao.updateAccount(account);
 	}
 
 	@Override
-	public boolean deleteAccount(Account account) {
+	public void deleteAccount(Account account) {
 		if (account == null) {
 			throw new NullPointerException();
 		}
-		return accountDao.deleteAccount(account);
+		accountDao.deleteAccount(account);
 	}
 
 	@Override

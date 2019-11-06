@@ -2,6 +2,7 @@ package com.revature.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -46,39 +47,49 @@ public class AccountDaoImpl implements AccountDao {
 	}
 
 	@Override
-	public Account readAccount(Account account) {
-		if (account == null) {
-			throw new NullPointerException();
-		}
-		
+	public Account readAccount(int accountId) {
 		beginSession();
 		
-		Account retAccount = sess.get(Account.class, account.getAccountId());
+		Account retAccount = sess.get(Account.class, accountId);
 		
 		endSession();
 		return retAccount;
 	}
 
 	@Override
-	public void updateAccount(Account account) {
+	public Account updateAccount(Account account) {
 		if (account == null) {
 			throw new NullPointerException();
 		}
 		beginSession();
 		sess.update(account);
 		endSession();
+		return account;
 	}
 
 	@Override
-	public boolean deleteAccount(Account account) {
-		// TODO Auto-generated method stub
-		return false;
+	public void deleteAccount(Account account) {
+		if (account == null) {
+			throw new NullPointerException();
+		}
+		beginSession();
+		sess.delete(account);
+		endSession();
 	}
 
 	@Override
 	public List<Account> readAllAccountsByUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		if (user == null) {
+			throw new NullPointerException();
+		}
+		beginSession();
+		String hql = "SELECT ura.account FROM UserRoleAccount ura WHERE ura.user.email=:email";
+		Query query = sess.createQuery(hql);
+		query.setParameter("email", user.getEmail());
+		
+		List<Account> accounts = query.list();
+		
+		return accounts;
 	}
 
 }
