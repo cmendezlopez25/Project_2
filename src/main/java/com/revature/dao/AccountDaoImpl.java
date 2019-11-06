@@ -41,9 +41,9 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public Account createAccount(Account account) {
 		beginSession();
-		Account newAccount = (Account) sess.save(account);
+		sess.save(account);
 		endSession();
-		return newAccount;
+		return account;
 	}
 
 	@Override
