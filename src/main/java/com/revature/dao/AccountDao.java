@@ -8,11 +8,11 @@ import com.revature.pojo.User;
 public interface AccountDao {
 	public Account createAccount(Account account);
 	
-	public Account readAccount(Account account);
+	public Account readAccount(int accountId);
 	
-	public void updateAccount(Account account);
+	public Account updateAccount(Account account);
 	
-	public boolean deleteAccount(Account account);
+	public void deleteAccount(Account account);
 	
 	public List<Account> readAllAccountsByUser(User user);
 	
