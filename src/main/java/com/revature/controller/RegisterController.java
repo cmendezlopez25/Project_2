@@ -29,6 +29,7 @@ public class RegisterController {
 	
 	@PostMapping(consumes="application/json")
 	public User registerPost(@RequestBody User user) {
+		System.out.println(user.getEmail());
 		if (!userService.createUser(user)) {
 			return null;
 		}

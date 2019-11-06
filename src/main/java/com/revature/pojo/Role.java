@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="role_table")
 public class Role {
 	@Id
-	@SequenceGenerator(name="role_id_seq", sequenceName="role_id_seq")
+	@SequenceGenerator(name="role_id_seq", sequenceName="role_id_seq", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "role_id_seq")
 	@Column(name="role_id")
 	private int roleId;
