@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="transaction_table")
 public class Transaction {
 	@Id
-	@SequenceGenerator(name="transaction_id_seq", sequenceName="transaction_id_seq")
+	@SequenceGenerator(name="transaction_id_seq", sequenceName="transaction_id_seq", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "transaction_id_seq")
 	@Column(name="transaction_id")
 	private int transactionId;

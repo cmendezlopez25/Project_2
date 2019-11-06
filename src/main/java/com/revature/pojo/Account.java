@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="account")
 public class Account {
 	@Id
-	@SequenceGenerator(name="account_id_seq", sequenceName="account_id_seq")
+	@SequenceGenerator(name="account_id_seq", sequenceName="account_id_seq", allocationSize=1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "account_id_seq")
 	@Column(name="account_id")
 	private int accountId;
