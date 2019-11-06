@@ -1,4 +1,4 @@
-package com.revature.test.service;
+package com.revature.test.dao;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;

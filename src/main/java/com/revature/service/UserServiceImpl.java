@@ -17,10 +17,16 @@ import com.revature.pojo.User;
 public class UserServiceImpl implements UserService {
 	
 	private UserDao userDao;
+	private AccountService accountService;
 	
 	@Autowired
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+	
+	@Autowired
+	public void setAccountService(AccountService accountService) {
+		this.accountService = accountService;
 	}
 
 	@Override
@@ -33,7 +39,19 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 		
-		return userDao.createUser(user);
+		if(!userDao.createUser(user)) {
+			return false;
+		}
+		
+		Account account = new Account();
+		account.setAccountName("Default Account");
+		
+		if(accountService.createAccount(account) == null) {
+			userDao.deleteUser(user);
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override

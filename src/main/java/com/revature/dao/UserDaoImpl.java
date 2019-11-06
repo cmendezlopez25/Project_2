@@ -1,5 +1,7 @@
 package com.revature.dao;
 
+import static com.revature.util.LoggerUtil.log;
+
 import java.util.List;
 import java.util.Map;
 
@@ -50,9 +52,16 @@ public class UserDaoImpl implements UserDao {
 		
 		beginSession();
 		
+		
 		sess.save(user);
 		
-		endSession();
+		try {
+			endSession();
+		} catch(Exception e) {
+			log.warn("User could not be created. Message: " + e.getMessage());
+			return false;
+		}
+		
 		return true;
 	}
 
