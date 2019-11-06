@@ -1,5 +1,7 @@
 package com.revature.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +22,13 @@ public class LoginController {
 	}
 	
 	@PostMapping(value="/login", consumes = "application/json", produces = "application/json")
-	public User loginPost(@RequestBody User user) {
+	public User loginPost(@RequestBody User user, HttpSession sess) {
 		User loginUser = userService.loginUser(user);
-		System.out.println("NOPLEASE");
+		
+		if (loginUser != null) {
+			sess.setAttribute("user", loginUser);
+		}
+
 		return loginUser;
 	}
 }

@@ -2,8 +2,10 @@ package com.revature.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +14,7 @@ import com.revature.dao.UserDao;
 import com.revature.pojo.Account;
 import com.revature.pojo.Role;
 import com.revature.pojo.User;
+import com.revature.pojo.UserRoleAccount;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -50,6 +53,14 @@ public class UserServiceImpl implements UserService {
 			userDao.deleteUser(user);
 			return false;
 		}
+		
+		Set<UserRoleAccount> uraSet = new HashSet<UserRoleAccount>();
+		UserRoleAccount ura = new UserRoleAccount();
+		Role role = new Role();
+		role.setRoleName("Owner");
+		ura.setRole(new Role());
+		uraSet.add(ura);
+		user.setUserRoleAccounts(uraSet);
 		
 		return true;
 	}
