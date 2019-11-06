@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 		Account account = new Account();
 		account.setAccountName("Default Account");
 		
-		if(accountService.createAccount(account) == null) {
+		if(accountService.createAccount(user, account) == null) {
 			userDao.deleteUser(user);
 			return false;
 		}

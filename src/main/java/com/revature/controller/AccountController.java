@@ -1,7 +1,6 @@
 package com.revature.controller;
 
 import java.util.List;
-import static com.revature.util.LoggerUtil.log;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,8 +34,7 @@ public class AccountController {
 	@PostMapping
 	public Account createAccount(@RequestBody Account account, HttpSession sess) {
 		User user = (User)sess.getAttribute("User");
-		log.debug(user);
-		return accountService.createAccount(account);
+		return accountService.createAccount(user, account);
 	}
 	
 	@GetMapping("/{accountId}")
