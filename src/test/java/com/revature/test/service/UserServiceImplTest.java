@@ -23,6 +23,8 @@ import com.revature.dao.UserDao;
 import com.revature.pojo.Account;
 import com.revature.pojo.Role;
 import com.revature.pojo.User;
+import com.revature.service.AccountService;
+import com.revature.service.AccountServiceImpl;
 import com.revature.service.UserServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,6 +36,9 @@ public class UserServiceImplTest {
 	
 	@Mock
 	private UserDao userDao;
+	
+	@Mock
+	private AccountService accountService;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -94,13 +99,30 @@ public class UserServiceImplTest {
 	
 	@Test
 	public void createUserNew() {
+		Account account = new Account();
+		account.setAccountName("Default Account");
+		when(accountService.createAccount(account)).thenReturn(account);
+		userService.setAccountService(accountService);
+		
 		assertTrue(userService.createUser(newUser));
 		Mockito.verify(userDao).createUser(newUser);
+		Mockito.verify(accountService).createAccount(account);
 	}
 	
 	@Test
 	public void createUserIncorrectFormat() {
 		assertFalse(userService.createUser(badFormatUser));
+	}
+	
+	@Test
+	public void createUserAccountFail() {
+		Account account = new Account();
+		account.setAccountName("Default Account");
+		when(accountService.createAccount(account)).thenReturn(null);
+		userService.setAccountService(accountService);
+		
+		assertFalse(userService.createUser(newUser));
+		Mockito.verify(accountService).createAccount(account);
 	}
 	
 	@Test(expected = NullPointerException.class)
