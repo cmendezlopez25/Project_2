@@ -54,9 +54,4 @@ public class TransactionServiceImplTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void createTransactionNew() {
-		assertFalse(trans)
-	}
-
 }
