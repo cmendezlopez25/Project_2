@@ -104,10 +104,47 @@ public class AccountServiceImpl implements AccountService {
 			return null;
 		}
 	
+		Set<UserRoleAccount> oldURAs = new HashSet<>();
+		Set<UserRoleAccount> newURAs = new HashSet<>();
 		
+		if (readAccount(account.getAccountId()).getUserRoleAccounts() != null) {
+			oldURAs = readAccount(account.getAccountId()).getUserRoleAccounts();
+		}
+		if (account.getUserRoleAccounts() != null) {
+			newURAs = account.getUserRoleAccounts();
+		}
 		
+		// Finding ura's that should be gone after update
+		Set<UserRoleAccount> deleteURAs = new HashSet<>();
 		
-		return accountDao.updateAccount(account);
+		for (UserRoleAccount ura : oldURAs) {
+			deleteURAs.add(ura);
+		}
+		
+		deleteURAs.removeAll(newURAs);
+		
+		for (UserRoleAccount ura : deleteURAs) {
+			userRoleAccountService.deleteUserRoleAccount(ura.getUser(), 
+					ura.getRole(), ura.getAccount());
+		}
+		
+		// Finding ura's that should be updated after update
+		Set<UserRoleAccount> createURAs = new HashSet<>();
+		
+		for (UserRoleAccount ura : newURAs) {
+			createURAs.add(ura);
+		}
+		
+		createURAs.removeAll(oldURAs);
+		
+		for (UserRoleAccount ura : newURAs) {
+			userRoleAccountService.createUserRoleAccount(ura.getUser(), 
+					ura.getRole(), ura.getAccount());
+		}
+		
+		Account updatedAccount = accountDao.updateAccount(account);
+		
+		return accountDao.readAccount(updatedAccount.getAccountId());
 	}
 
 	@Override
