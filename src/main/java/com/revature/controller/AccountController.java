@@ -20,7 +20,7 @@ import com.revature.pojo.User;
 import com.revature.service.AccountService;
 
 @RestController
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequestMapping("/account")
 public class AccountController {
 
@@ -33,7 +33,7 @@ public class AccountController {
 	
 	@PostMapping
 	public Account createAccount(@RequestBody Account account, HttpSession sess) {
-		User user = (User)sess.getAttribute("User");
+		User user = (User)sess.getAttribute("user");
 		return accountService.createAccount(user, account);
 	}
 	
@@ -44,20 +44,24 @@ public class AccountController {
 	
 	@PutMapping
 	public Account updateAccount(@RequestBody Account account, HttpSession sess) {
-		User user = (User)sess.getAttribute("User");
+		User user = (User)sess.getAttribute("user");
 		return accountService.updateAccount(user, account);
 	}
 	
 	@DeleteMapping("/{accountId}")
 	public String deleteAccount(@PathVariable int accountId, HttpSession sess) {
-		User user = (User)sess.getAttribute("User");
+		User user = (User)sess.getAttribute("user");
 		accountService.deleteAccount(user, accountId);
 		return "Deleted account with id " + accountId;
 	}
 	
 	@GetMapping
 	public List<Account> getAllAccountsByUser(HttpSession sess) {
-		User user = (User)sess.getAttribute("User");
+		User user = (User)sess.getAttribute("user");
+//		for (int i=0; i<10; i++) {
+//			System.out.println("======================");
+//		}
+//		System.out.println(user.toString());
 		return accountService.readAllAccountsByUser(user);
 	}
 }
