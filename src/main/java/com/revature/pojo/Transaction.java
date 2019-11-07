@@ -53,7 +53,6 @@ public class Transaction {
 	private String transactionName;
 	
 	@Column(name="note")
-	@NotEmpty
 	private String note;
 	
 	@Column(name="recurring")
