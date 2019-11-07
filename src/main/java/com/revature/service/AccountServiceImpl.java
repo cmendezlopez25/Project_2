@@ -42,25 +42,38 @@ public class AccountServiceImpl implements AccountService {
 			userRoleAccounts = account.getUserRoleAccounts();
 		}
 		
+		boolean hasOwnerLink = false;
+		Set<UserRoleAccount> removedUserRoleAccounts = new HashSet<>();
+		
 		for (UserRoleAccount ura : userRoleAccounts) {
-			if (ura.getUser() == null || ura.getRole() == null || ura.getAccount() == null) {
-				userRoleAccounts.remove(ura);
+			if (ura.getUser() == null || ura.getRole() == null) {
+				removedUserRoleAccounts.add(ura);
 			}
 			// This is to make sure not just anyone can be user
-			else if (ura.getUser() != ownerUser && ura.getRole().getRoleName().equals("Owner")) {
-				userRoleAccounts.remove(ura);
+			else if (!ura.getUser().getEmail().equals(ownerUser.getEmail()) 
+					&& ura.getRole().getRoleName().equals("Owner")) {
+				removedUserRoleAccounts.add(ura);
 			}
 			// This is to make sure owner is not any other role
-			else if (ura.getUser() == ownerUser && ura.getRole() != new Role(1, "Owner")) {
-				userRoleAccounts.remove(ura);
+			else if (ura.getUser().getEmail().equals(ownerUser.getEmail()) 
+					&& !ura.getRole().getRoleName().equals("Owner")) {
+				removedUserRoleAccounts.add(ura);
+			}
+			else if (ura.getUser().getEmail().equals(ownerUser.getEmail()) 
+					&& ura.getRole().getRoleName().equals("Owner")) {
+				hasOwnerLink = true;
+				ura.setAccount(account);
+			}
+			else {
+				ura.setAccount(account);
 			}
 		}
 		
-		// Making sure that userRoleAccounts has a link with ownerUser as actually an owner
-		UserRoleAccount ownerUra = new UserRoleAccount(ownerUser, new Role(1, "Owner"), account);
+		userRoleAccounts.removeAll(removedUserRoleAccounts);
 		
-		if (!userRoleAccounts.contains(ownerUra)) {
-			userRoleAccounts.add(ownerUra);
+		// Making sure that userRoleAccounts has a link with ownerUser as actually an owner
+		if (!hasOwnerLink) {
+			userRoleAccounts.add(new UserRoleAccount(ownerUser, new Role(1, "Owner"), account));
 		}
 		
 		account.setUserRoleAccounts(userRoleAccounts);
@@ -72,7 +85,9 @@ public class AccountServiceImpl implements AccountService {
 					ura.getRole(), ura.getAccount());
 		}
 		
-		return newAccount;
+		// This is to make it return correct uraId after userroleaccount link
+		// is created in database
+		return accountDao.readAccount(newAccount.getAccountId());
 	}
 
 	@Override

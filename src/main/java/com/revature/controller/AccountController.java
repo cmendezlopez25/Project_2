@@ -57,7 +57,6 @@ public class AccountController {
 	
 	@GetMapping
 	public List<Account> getAllAccountsByUser(HttpSession sess) {
-		// should user only be able to see only their logged in accounts?
 		User user = (User)sess.getAttribute("User");
 		return accountService.readAllAccountsByUser(user);
 	}
