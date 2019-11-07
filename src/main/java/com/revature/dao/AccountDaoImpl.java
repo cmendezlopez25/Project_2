@@ -40,9 +40,6 @@ public class AccountDaoImpl implements AccountDao {
 	
 	@Override
 	public Account createAccount(Account account) {
-		if (account == null) {
-			throw new NullPointerException();
-		}
 		beginSession();
 		sess.save(account);
 		endSession();
@@ -52,7 +49,9 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public Account readAccount(int accountId) {
 		beginSession();
+		
 		Account retAccount = sess.get(Account.class, accountId);
+		
 		endSession();
 		return retAccount;
 	}

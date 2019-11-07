@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 		Account account = new Account();
 		account.setAccountName("Default Account");
 		
-		if(accountService.createAccount(user, account) == null) {
+		if(accountService.createAccount(account) == null) {
 			userDao.deleteUser(user);
 			return false;
 		}
@@ -80,19 +80,6 @@ public class UserServiceImpl implements UserService {
 			newUser = null;
 		}
 		return newUser;
-	}
-	
-	@Override
-	public User readUser(User user) {
-		if (user == null) {
-			throw new NullPointerException();
-		}
-		
-		if (!isValidUser(user)) {
-			return null;
-		}
-		
-		return userDao.readUser(user);
 	}
 
 	@Override
@@ -151,5 +138,4 @@ public class UserServiceImpl implements UserService {
 		
 		return true;
 	}
-
 }

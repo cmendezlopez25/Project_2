@@ -37,7 +37,7 @@ public class Account {
 	private Set<Transaction> transactions;
 	
 	@OneToMany(mappedBy="account", fetch=FetchType.EAGER)
-	@JsonIgnoreProperties("account")
+	@JsonIgnoreProperties("user")
 	private Set<UserRoleAccount> userRoleAccounts;
 	
 	public Account() {
@@ -115,7 +115,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account [accountId=" + accountId + ", accountName=" + accountName + "]";
+		return "Account [accountId=" + accountId + ", accountName=" + accountName + ", transactions=" + transactions + "]";
 	}
 
 	

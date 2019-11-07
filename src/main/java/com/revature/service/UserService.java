@@ -10,7 +10,6 @@ import com.revature.pojo.User;
 public interface UserService {
 	public boolean createUser(User user);
 	public User loginUser(User user);
-	public User readUser(User user);
 	public boolean updateUser(User user);
 	public boolean deleteUser(User user);
 	public List<User> readAllUsers();

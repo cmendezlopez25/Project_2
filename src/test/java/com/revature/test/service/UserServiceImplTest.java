@@ -1,8 +1,6 @@
 package com.revature.test.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -19,12 +17,14 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.revature.dao.UserDao;
 import com.revature.pojo.Account;
 import com.revature.pojo.Role;
 import com.revature.pojo.User;
 import com.revature.service.AccountService;
+import com.revature.service.AccountServiceImpl;
 import com.revature.service.UserServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -101,12 +101,12 @@ public class UserServiceImplTest {
 	public void createUserNew() {
 		Account account = new Account();
 		account.setAccountName("Default Account");
-		when(accountService.createAccount(newUser, account)).thenReturn(account);
+		when(accountService.createAccount(account)).thenReturn(account);
 		userService.setAccountService(accountService);
 		
 		assertTrue(userService.createUser(newUser));
 		Mockito.verify(userDao).createUser(newUser);
-		Mockito.verify(accountService).createAccount(newUser, account);
+		Mockito.verify(accountService).createAccount(account);
 	}
 	
 	@Test
@@ -118,11 +118,11 @@ public class UserServiceImplTest {
 	public void createUserAccountFail() {
 		Account account = new Account();
 		account.setAccountName("Default Account");
-		when(accountService.createAccount(newUser, account)).thenReturn(null);
+		when(accountService.createAccount(account)).thenReturn(null);
 		userService.setAccountService(accountService);
 		
 		assertFalse(userService.createUser(newUser));
-		Mockito.verify(accountService).createAccount(newUser, account);
+		Mockito.verify(accountService).createAccount(account);
 	}
 	
 	@Test(expected = NullPointerException.class)
