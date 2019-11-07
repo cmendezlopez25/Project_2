@@ -27,23 +27,50 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
-	public Account createAccount(User user, Account account) {
-		if (account == null || user == null) {
+	public Account createAccount(User ownerUser, Account account) {
+		if (account == null || ownerUser == null) {
 			throw new NullPointerException();
 		}
 		if (!isValidAccount(account)) {
 			return null;
 		}
 		
+		Set<UserRoleAccount> userRoleAccounts = new HashSet<>();
+		
+		// To prevent setting userRoleAccounts to null
+		if (account.getUserRoleAccounts() != null) {
+			userRoleAccounts = account.getUserRoleAccounts();
+		}
+		
+		for (UserRoleAccount ura : userRoleAccounts) {
+			if (ura.getUser() == null || ura.getRole() == null || ura.getAccount() == null) {
+				userRoleAccounts.remove(ura);
+			}
+			// This is to make sure not just anyone can be user
+			else if (ura.getUser() != ownerUser && ura.getRole().getRoleName().equals("Owner")) {
+				userRoleAccounts.remove(ura);
+			}
+			// This is to make sure owner is not any other role
+			else if (ura.getUser() == ownerUser && ura.getRole() != new Role(1, "Owner")) {
+				userRoleAccounts.remove(ura);
+			}
+		}
+		
+		// Making sure that userRoleAccounts has a link with ownerUser as actually an owner
+		UserRoleAccount ownerUra = new UserRoleAccount(ownerUser, new Role(1, "Owner"), account);
+		
+		if (!userRoleAccounts.contains(ownerUra)) {
+			userRoleAccounts.add(ownerUra);
+		}
+		
+		account.setUserRoleAccounts(userRoleAccounts);
+		
 		Account newAccount = accountDao.createAccount(account);
 		
-		UserRoleAccount ura = userRoleAccountService.
-				createUserRoleAccount(user, new Role(1, "Owner"), newAccount);
-		
-		Set<UserRoleAccount> userRoleAccounts = new HashSet<>();
-		userRoleAccounts.add(ura);
-		
-		newAccount.setUserRoleAccounts(userRoleAccounts);
+		for (UserRoleAccount ura : userRoleAccounts) {
+			userRoleAccountService.createUserRoleAccount(ura.getUser(),
+					ura.getRole(), ura.getAccount());
+		}
 		
 		return newAccount;
 	}
