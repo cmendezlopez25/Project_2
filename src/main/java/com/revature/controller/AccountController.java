@@ -1,7 +1,6 @@
 package com.revature.controller;
 
 import java.util.List;
-import static com.revature.util.LoggerUtil.log;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,8 +34,7 @@ public class AccountController {
 	@PostMapping
 	public Account createAccount(@RequestBody Account account, HttpSession sess) {
 		User user = (User)sess.getAttribute("User");
-		log.debug(user);
-		return accountService.createAccount(account);
+		return accountService.createAccount(user, account);
 	}
 	
 	@GetMapping("/{accountId}")
@@ -45,19 +43,21 @@ public class AccountController {
 	}
 	
 	@PutMapping
-	public Account updateAccount(@RequestBody Account account) {
-		return accountService.updateAccount(account);
+	public Account updateAccount(@RequestBody Account account, HttpSession sess) {
+		User user = (User)sess.getAttribute("User");
+		return accountService.updateAccount(user, account);
 	}
 	
-	@DeleteMapping
-	public String deleteAccount(@RequestBody Account account) {
-		accountService.deleteAccount(account);
-		// Might need to redo return type for deletemapping
-		return "Deleted account";
+	@DeleteMapping("/{accountId}")
+	public String deleteAccount(@PathVariable int accountId, HttpSession sess) {
+		User user = (User)sess.getAttribute("User");
+		accountService.deleteAccount(user, accountId);
+		return "Deleted account with id " + accountId;
 	}
 	
 	@GetMapping
-	public List<Account> getAllAccountsByUser(@RequestBody User user) {
+	public List<Account> getAllAccountsByUser(HttpSession sess) {
+		User user = (User)sess.getAttribute("User");
 		return accountService.readAllAccountsByUser(user);
 	}
 }
