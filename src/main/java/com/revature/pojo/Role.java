@@ -38,6 +38,12 @@ public class Role {
 	public Role() {
 		super();
 	}
+	
+	public Role(int roleId, @Size(max = 25) String roleName) {
+		super();
+		this.roleId = roleId;
+		this.roleName = roleName;
+	}
 
 	public Role(int roleId, @Size(max = 25) String roleName, Set<UserRoleAccount> userRoleAccounts) {
 		super();
