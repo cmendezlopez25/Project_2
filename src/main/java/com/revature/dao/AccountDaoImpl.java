@@ -52,9 +52,7 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public Account readAccount(int accountId) {
 		beginSession();
-		
 		Account retAccount = sess.get(Account.class, accountId);
-		
 		endSession();
 		return retAccount;
 	}

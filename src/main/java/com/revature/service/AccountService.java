@@ -10,9 +10,9 @@ public interface AccountService {
 	
 	public Account readAccount(int accountId);
 	
-	public Account updateAccount(Account account);
+	public Account updateAccount(User user, Account account);
 	
-	public void deleteAccount(Account account);
+	public void deleteAccount(User user, int accountId);
 	
 	public List<Account> readAllAccountsByUser(User user);
 }

@@ -39,27 +39,26 @@ public class AccountController {
 	
 	@GetMapping("/{accountId}")
 	public Account getAccount(@PathVariable int accountId) {
-		// Should only people who are in account be able to read account?
 		return accountService.readAccount(accountId);
 	}
 	
 	@PutMapping
-	public Account updateAccount(@RequestBody Account account) {
-		// Will have to do role logic in service....
-		return accountService.updateAccount(account);
+	public Account updateAccount(@RequestBody Account account, HttpSession sess) {
+		User user = (User)sess.getAttribute("User");
+		return accountService.updateAccount(user, account);
 	}
 	
-	@DeleteMapping
-	public String deleteAccount(@RequestBody Account account) {
-		// Only owner will be able to delete account
-		accountService.deleteAccount(account);
-		// Might need to redo return type for deletemapping
-		return "Deleted account";
+	@DeleteMapping("/{accountId}")
+	public String deleteAccount(@PathVariable int accountId, HttpSession sess) {
+		User user = (User)sess.getAttribute("User");
+		accountService.deleteAccount(user, accountId);
+		return "Deleted account with id " + accountId;
 	}
 	
 	@GetMapping
-	public List<Account> getAllAccountsByUser(@RequestBody User user) {
+	public List<Account> getAllAccountsByUser(HttpSession sess) {
 		// should user only be able to see only their logged in accounts?
+		User user = (User)sess.getAttribute("User");
 		return accountService.readAllAccountsByUser(user);
 	}
 }

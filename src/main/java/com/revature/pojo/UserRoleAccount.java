@@ -94,7 +94,6 @@ public class UserRoleAccount {
 		int result = 1;
 		result = prime * result + ((account == null) ? 0 : account.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + uraId;
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -117,8 +116,6 @@ public class UserRoleAccount {
 			if (other.role != null)
 				return false;
 		} else if (!role.equals(other.role))
-			return false;
-		if (uraId != other.uraId)
 			return false;
 		if (user == null) {
 			if (other.user != null)

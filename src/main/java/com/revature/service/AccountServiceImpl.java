@@ -81,22 +81,46 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public Account updateAccount(Account account) {
-		if (account == null) {
+	public Account updateAccount(User ownerUser, Account account) {
+		if (account == null || ownerUser == null) {
 			throw new NullPointerException();
 		}
 		if (!isValidAccount(account)) {
 			return null;
 		}
+	
+		
+		
+		
 		return accountDao.updateAccount(account);
 	}
 
 	@Override
-	public void deleteAccount(Account account) {
-		if (account == null) {
+	public void deleteAccount(User user, int accountId) {
+		if (user == null) {
 			throw new NullPointerException();
 		}
-		accountDao.deleteAccount(account);
+		
+		Account account = readAccount(accountId);
+		
+		if (account == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		Set<UserRoleAccount> userRoleAccounts = new HashSet<>();
+		
+		if (account.getUserRoleAccounts() != null) {
+			userRoleAccounts = account.getUserRoleAccounts();
+		}
+		
+		UserRoleAccount ura = new UserRoleAccount(user, new Role(1, "Owner"), account);
+		
+		if (userRoleAccounts.contains(ura)) {
+			accountDao.deleteAccount(account);
+		}
+		else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	@Override
