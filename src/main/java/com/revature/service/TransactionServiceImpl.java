@@ -3,11 +3,13 @@ package com.revature.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.revature.dao.TransactionDao;
 import com.revature.pojo.Account;
 import com.revature.pojo.Transaction;
 
+@Component
 public class TransactionServiceImpl implements TransactionService{
 	
 	private TransactionDao transactionDao;

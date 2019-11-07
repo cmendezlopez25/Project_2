@@ -9,10 +9,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.revature.pojo.Account;
 import com.revature.pojo.Transaction;
 
+@Component
 public class TransactionDaoImpl implements TransactionDao {
 	
 	private static SessionFactory sf;
