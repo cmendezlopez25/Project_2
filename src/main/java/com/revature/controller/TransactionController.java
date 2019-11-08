@@ -46,7 +46,7 @@ public class TransactionController {
 	}
 	
 	@PostMapping("/account/{accountId}/transaction")
-	public Transaction transactionPost(@RequestBody Transaction transaction, @PathVariable int accountId) {
+	public boolean transactionPost(@RequestBody Transaction transaction, @PathVariable int accountId) {
 		if(transaction == null) {
 			throw new NullPointerException();
 		}
