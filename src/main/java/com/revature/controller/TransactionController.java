@@ -46,11 +46,11 @@ public class TransactionController {
 	}
 	
 	@PostMapping("/account/{accountId}/transaction")
-	public void transactionPost(@RequestBody Transaction transaction, @PathVariable int accountId) {
+	public Transaction transactionPost(@RequestBody Transaction transaction, @PathVariable int accountId) {
 		if(transaction == null) {
 			throw new NullPointerException();
 		}
-		transactionService.createTransaction(transaction);		
+		return transactionService.createTransaction(transaction);		
 	}
 	
 	@PutMapping("/transaction")

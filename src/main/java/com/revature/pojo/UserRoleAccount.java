@@ -34,7 +34,7 @@ public class UserRoleAccount {
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="account_id")
-	@JsonIgnoreProperties("userRoleAccounts")
+	@JsonIgnoreProperties(value={"userRoleAccounts"}, allowSetters=true)
 	private Account account;
 	
 	public UserRoleAccount() {

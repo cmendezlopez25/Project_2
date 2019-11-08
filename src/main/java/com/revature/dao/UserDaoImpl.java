@@ -71,9 +71,9 @@ public class UserDaoImpl implements UserDao {
 			throw new NullPointerException();
 		}
 		
-		if (!isValidUser(user)) {
+		/*if (!isValidUser(user)) {
 			return null;
-		}
+		}*/
 		
 		beginSession();
 		
