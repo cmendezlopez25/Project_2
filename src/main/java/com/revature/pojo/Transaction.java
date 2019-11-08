@@ -55,9 +55,6 @@ public class Transaction {
 	@Column(name="note")
 	private String note;
 	
-	@Column(name="recurring")
-	private String recurring;
-	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="transaction_category",
 			joinColumns=@JoinColumn(name="transaction_id"),
@@ -79,7 +76,6 @@ public class Transaction {
 		this.date = date;
 		this.transactionName = transactionName;
 		this.note = note;
-		this.recurring = recurring;
 		this.categories = categories;
 	}
 
@@ -131,14 +127,6 @@ public class Transaction {
 		this.note = note;
 	}
 
-	public String getRecurring() {
-		return recurring;
-	}
-
-	public void setRecurring(String recurring) {
-		this.recurring = recurring;
-	}
-
 	public Set<Category> getCategories() {
 		return categories;
 	}
@@ -157,7 +145,6 @@ public class Transaction {
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((note == null) ? 0 : note.hashCode());
-		result = prime * result + ((recurring == null) ? 0 : recurring.hashCode());
 		result = prime * result + transactionId;
 		result = prime * result + ((transactionName == null) ? 0 : transactionName.hashCode());
 		return result;
@@ -189,11 +176,6 @@ public class Transaction {
 				return false;
 		} else if (!note.equals(other.note))
 			return false;
-		if (recurring == null) {
-			if (other.recurring != null)
-				return false;
-		} else if (!recurring.equals(other.recurring))
-			return false;
 		if (transactionId != other.transactionId)
 			return false;
 		if (transactionName == null) {
@@ -207,7 +189,7 @@ public class Transaction {
 	@Override
 	public String toString() {
 		return "Transaction [transactionId=" + transactionId + ", account=" + account + ", amount=" + amount + ", date="
-				+ date + ", transactionName=" + transactionName + ", note=" + note + ", recurring=" + recurring + "]";
+				+ date + ", transactionName=" + transactionName + ", note=" + note + "]";
 	}
 
 	
