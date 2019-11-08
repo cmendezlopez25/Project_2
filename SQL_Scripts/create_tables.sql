@@ -50,8 +50,8 @@ create table user_role_account(
 
 
 --sequences
-create sequence account_id_seq;
-create sequence transaction_id_seq;
-create sequence category_id_seq;
-create sequence role_id_seq;
-create sequence ura_id_seq;
+create sequence account_id_seq start 3;
+create sequence transaction_id_seq start 4;
+create sequence category_id_seq start 4;
+create sequence role_id_seq start 5;
+create sequence ura_id_seq start 6;
