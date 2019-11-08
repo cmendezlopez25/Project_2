@@ -58,10 +58,6 @@ public class AccountController {
 	@GetMapping
 	public List<Account> getAllAccountsByUser(HttpSession sess) {
 		User user = (User)sess.getAttribute("user");
-//		for (int i=0; i<10; i++) {
-//			System.out.println("======================");
-//		}
-//		System.out.println(user.toString());
 		return accountService.readAllAccountsByUser(user);
 	}
 }
