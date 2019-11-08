@@ -18,7 +18,6 @@ create table transaction_table(
     date date not null,
     name varchar(100) not null,
     note text not null,
-    recurring varchar(25) null,
     constraint transaction_account_id_fk foreign key (account_id) REFERENCES account(account_id) on delete cascade
 );
 
