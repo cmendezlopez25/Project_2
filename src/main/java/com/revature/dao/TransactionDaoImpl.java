@@ -5,6 +5,7 @@ import static com.revature.util.LoggerUtil.log;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -119,9 +120,15 @@ public class TransactionDaoImpl implements TransactionDao {
 		if(account == null) {
 			throw new NullPointerException();
 		}
-		Criteria cr = sess.createCriteria(Transaction.class);
-		cr.add(Restrictions.gt("account", account));
-		return cr.list();
+		beginSession();
+		
+		String hql = "SELECT t FROM Transaction t WHERE t.account.accountId=:accountId";
+		Query query = sess.createQuery(hql);
+		query.setParameter("accountId", account.getAccountId());
+		
+		List<Transaction> transactions = query.list();
+		
+		return transactions;
 	}
 	
 	private boolean isValidTransaction(Transaction transaction) {

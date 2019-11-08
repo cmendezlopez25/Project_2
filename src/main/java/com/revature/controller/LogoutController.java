@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/logout")
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class LogoutController {
 	@GetMapping
 	public void logoutGet(HttpSession sess) {
