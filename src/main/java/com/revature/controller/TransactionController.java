@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ import com.revature.service.AccountService;
 import com.revature.service.TransactionService;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class TransactionController {
 	private TransactionService transactionService;
 	private AccountService accountService;
@@ -32,23 +33,33 @@ public class TransactionController {
 		this.accountService = accountService;
 	}
 	
-	@GetMapping(value = "/account/{accountId}/transaction")
+	@GetMapping("/account/{accountId}/transaction")
 	public List<Transaction> getAllTransactionsByAccount(@PathVariable int accountId) {
 		Account account = accountService.readAccount(accountId);
+		
+		if (account == null) {
+			return null;
+		}
+		
 		List<Transaction> transactions = transactionService.readAllTransactionsByAccount(account);
 		return transactions;
 	}
 	
-	@PostMapping()
-	public void transactionPost(@RequestBody Transaction transaction) {
+	@PostMapping("/account/{accountId}/transaction")
+	public void transactionPost(@RequestBody Transaction transaction, @PathVariable int accountId) {
 		if(transaction == null) {
 			throw new NullPointerException();
 		}
 		transactionService.createTransaction(transaction);		
 	}
 	
-	@DeleteMapping
-	public void deleteTransaction(@RequestBody Transaction transaction) {
+	@PutMapping("/transaction")
+	public void transactionPut(@RequestBody Transaction transaction) {
+		
+	}
+	
+	@DeleteMapping("/transaction/{transactionId}")
+	public void deleteTransaction(@RequestBody Transaction transaction, @PathVariable int transactionId) {
 		if(transaction == null) {
 			throw new NullPointerException();
 		}
