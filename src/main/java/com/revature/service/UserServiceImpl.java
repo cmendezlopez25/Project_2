@@ -88,9 +88,9 @@ public class UserServiceImpl implements UserService {
 			throw new NullPointerException();
 		}
 		
-		if (!isValidUser(user)) {
+		/*if (!isValidUser(user)) {
 			return null;
-		}
+		}*/
 		
 		return userDao.readUser(user);
 	}
